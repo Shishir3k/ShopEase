@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronics - ShopEase</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Category-specific styles */
+        .hero-category {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .category-filters {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group h3 {
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+        
+        .filter-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            outline: none;
+            transition: var(--transition);
+        }
+        
+        .filter-group select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 109, 229, 0.1);
+        }
+        
+        .price-range {
+            width: 100%;
+        }
+        
+        .price-range input[type="range"] {
+            width: 100%;
+            margin-bottom: 10px;
+            accent-color: var(--primary-color);
+        }
+        
+        .price-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        
+        .category-featured {
+            margin-bottom: 40px;
+        }
+        
+        .category-featured-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .category-featured-item {
+            position: relative;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .category-featured-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .category-featured-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .category-featured-item-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+        }
+        
+        .category-featured-item-content h3 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .category-featured-item-content p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .category-featured-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .category-featured-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-wrapper">
+                <div class="logo">
+                    <h1><a href="../index.html">ShopEase</a></h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for products...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-icons">
+                    <a href="../profile.html" class="icon-link"><i class="fas fa-user"></i></a>
+                    <a href="#" class="icon-link cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                </div>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container">
+            <ul class="nav-list">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#products">Products</a></li>
+                <li><a href="../index.html#categories" class="active">Categories</a></li>
+                <li><a href="../index.html#deals">Deals</a></li>
+                <li><a href="../index.html#about">About Us</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Category Hero -->
+    <section class="hero-category">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Electronics</h1>
+                <p>Discover the latest electronics and gadgets for your tech needs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Featured -->
+    <section class="category-featured">
+        <div class="container">
+            <h2 class="section-title">Featured Collections</h2>
+            <div class="category-featured-grid">
+                <div class="category-featured-item">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Audio Devices">
+                    <div class="category-featured-item-content">
+                        <h3>Audio Devices</h3>
+                        <p>Premium sound for your entertainment</p>
+                    </div>
+                </div>
+                <div class="category-featured-item">
+                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Computers">
+                    <div class="category-featured-item-content">
+                        <h3>Computers</h3>
+                        <p>Powerful machines for work and play</p>
+                    </div>
+                </div>
+                <div class="category-featured-item">
+                    <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Wearables">
+                    <div class="category-featured-item-content">
+                        <h3>Wearables</h3>
+                        <p>Smart technology for your lifestyle</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Products -->
+    <section class="category-products">
+        <div class="container">
+            <h2 class="section-title">All Products</h2>
+            
+            <div class="category-filters">
+                <div class="filter-group">
+                    <h3>Sort By</h3>
+                    <select id="sort-options">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Customer Rating</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <h3>Price Range</h3>
+                    <div class="price-range">
+                        <input type="range" min="0" max="500" value="500" id="price-filter">
+                        <div class="price-values">
+                            <span>$0</span>
+                            <span id="price-value">$500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="products-grid" id="electronics-products">
+                <!-- Products will be loaded dynamically with JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Get the latest updates on new electronics and special promotions</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ShopEase</h3>
+                    <p>Your one-stop destination for all your shopping needs.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../index.html#products">Products</a></li>
+                        <li><a href="../index.html#categories">Categories</a></li>
+                        <li><a href="../index.html#deals">Deals</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="../index.html#contact">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Payment Methods</h3>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ShopEase. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <p>Total: <span id="cart-total-price">$0.00</span></p>
+            </div>
+            <button class="btn checkout-btn">Checkout</button>
+        </div>
+    </div>
+    <div class="overlay"></div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter products by category
+            const electronicsProducts = products.filter(product => product.category === 'Electronics');
+            
+            // Display electronics products
+            const productsGrid = document.getElementById('electronics-products');
+            if (productsGrid) {
+                displayCategoryProducts(electronicsProducts, productsGrid);
+            }
+            
+            // Price filter functionality
+            const priceFilter = document.getElementById('price-filter');
+            const priceValue = document.getElementById('price-value');
+            
+            if (priceFilter && priceValue) {
+                priceFilter.addEventListener('input', function() {
+                    const maxPrice = this.value;
+                    priceValue.textContent = `$${maxPrice}`;
+                    
+                    const filteredProducts = electronicsProducts.filter(product => product.price <= maxPrice);
+                    displayCategoryProducts(filteredProducts, productsGrid);
+                });
+            }
+            
+            // Sort functionality
+            const sortOptions = document.getElementById('sort-options');
+            if (sortOptions) {
+                sortOptions.addEventListener('change', function() {
+                    const sortValue = this.value;
+                    let sortedProducts = [...electronicsProducts];
+                    
+                    switch(sortValue) {
+                        case 'price-low':
+                            sortedProducts.sort((a, b) => a.price - b.price);
+                            break;
+                        case 'price-high':
+                            sortedProducts.sort((a, b) => b.price - a.price);
+                            break;
+                        case 'rating':
+                            sortedProducts.sort((a, b) => b.rating - a.rating);
+                            break;
+                        default:
+                            // Featured - no sorting needed
+                            break;
+                    }
+                    
+                    const maxPrice = priceFilter.value;
+                    sortedProducts = sortedProducts.filter(product => product.price <= maxPrice);
+                    displayCategoryProducts(sortedProducts, productsGrid);
+                });
+            }
+        });
+        
+        // Function to display category products
+        function displayCategoryProducts(products, container) {
+            container.innerHTML = '';
+            
+            if (products.length === 0) {
+                container.innerHTML = '<p class="no-products">No products found matching your criteria.</p>';
+                return;
+            }
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                
+                // Create rating stars
+                let ratingStars = '';
+                const fullStars = Math.floor(product.rating);
+                const hasHalfStar = product.rating % 1 !== 0;
+                
+                for (let i = 0; i < fullStars; i++) {
+                    ratingStars += '<i class="fas fa-star"></i>';
+                }
+                
+                if (hasHalfStar) {
+                    ratingStars += '<i class="fas fa-star-half-alt"></i>';
+                }
+                
+                const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                for (let i = 0; i < emptyStars; i++) {
+                    ratingStars += '<i class="far fa-star"></i>';
+                }
+                
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-price">$${product.price.toFixed(2)}</p>
+                        <div class="product-rating">${ratingStars}</div>
+                        <p class="product-description">${product.description}</p>
+                        <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+                    </div>
+                `;
+                
+                container.appendChild(productCard);
+            });
+            
+            // Add event listeners to "Add to Cart" buttons
+            const addToCartButtons = container.querySelectorAll('.add-to-cart');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    addToCart(productId);
+                });
+            });
+        }
+    </script>
+</body>
+</html> 

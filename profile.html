@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings - ShopEase</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Profile Page Specific Styles */
+        .profile-container {
+            padding: 60px 0;
+            background-color: var(--secondary-color);
+        }
+        
+        .profile-header {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 30px;
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-info h1 {
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+        
+        .profile-info p {
+            color: var(--light-text);
+            margin-bottom: 15px;
+        }
+        
+        .profile-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        
+        .profile-tab {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .profile-tab.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .profile-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .profile-section h2 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        
+        .form-group {
+            flex: 0 0 calc(50% - 30px);
+            margin: 0 15px 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-group {
+                flex: 0 0 calc(100% - 30px);
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-avatar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+        
+        .order-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .order-items {
+            margin-bottom: 15px;
+        }
+        
+        .order-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .order-item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .order-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .order-item-details {
+            flex: 1;
+        }
+        
+        .order-item-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .order-status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .status-delivered {
+            background-color: #e6f7e6;
+            color: #28a745;
+        }
+        
+        .status-processing {
+            background-color: #fff3cd;
+            color: #ffc107;
+        }
+        
+        .status-shipped {
+            background-color: #cce5ff;
+            color: #007bff;
+        }
+        
+        .address-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .address-card h3 {
+            margin-bottom: 10px;
+        }
+        
+        .address-actions {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        
+        .address-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            color: var(--light-text);
+            transition: var(--transition);
+        }
+        
+        .address-actions button:hover {
+            color: var(--primary-color);
+        }
+        
+        .wishlist-item {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .wishlist-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .wishlist-item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-right: 20px;
+        }
+        
+        .wishlist-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .wishlist-item-details {
+            flex: 1;
+        }
+        
+        .wishlist-item-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .wishlist-item-price {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .wishlist-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-wrapper">
+                <div class="logo">
+                    <h1><a href="index.html">ShopEase</a></h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for products...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-icons">
+                    <a href="profile.html" class="icon-link"><i class="fas fa-user"></i></a>
+                    <a href="#" class="icon-link cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                </div>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container">
+            <ul class="nav-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#categories">Categories</a></li>
+                <li><a href="index.html#deals">Deals</a></li>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <section class="profile-container">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img src="https://via.placeholder.com/200x200" alt="User Avatar">
+                </div>
+                <div class="profile-info">
+                    <h1>John Doe</h1>
+                    <p>john.doe@example.com</p>
+                    <p>Member since: January 2025</p>
+                </div>
+            </div>
+
+            <div class="profile-tabs">
+                <div class="profile-tab active" data-tab="account">Account Settings</div>
+                <div class="profile-tab" data-tab="orders">My Orders</div>
+                <div class="profile-tab" data-tab="addresses">Addresses</div>
+                <div class="profile-tab" data-tab="wishlist">Wishlist</div>
+            </div>
+
+            <!-- Account Settings Tab -->
+            <div class="tab-content active" id="account">
+                <div class="profile-section">
+                    <h2>Personal Information</h2>
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" value="John" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" value="Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" value="john.doe@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" value="+1 (123) 456-7890">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Save Changes</button>
+                    </form>
+                </div>
+
+                <div class="profile-section">
+                    <h2>Change Password</h2>
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="current-password">Current Password</label>
+                                <input type="password" id="current-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-password">New Password</label>
+                                <input type="password" id="new-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password">Confirm New Password</label>
+                                <input type="password" id="confirm-password" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Update Password</button>
+                    </form>
+                </div>
+
+                <div class="profile-section">
+                    <h2>Notification Preferences</h2>
+                    <form>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" checked> Email notifications for orders
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" checked> Email notifications for promotions and deals
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox"> SMS notifications for orders
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox"> SMS notifications for promotions and deals
+                            </label>
+                        </div>
+                        <button type="submit" class="btn">Save Preferences</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div class="tab-content" id="orders">
+                <div class="profile-section">
+                    <h2>Order History</h2>
+                    
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <h3>Order #12345</h3>
+                                <p>Placed on: June 15, 2025</p>
+                            </div>
+                            <span class="order-status status-delivered">Delivered</span>
+                        </div>
+                        <div class="order-items">
+                            <div class="order-item">
+                                <div class="order-item-image">
+                                    <img src="https://via.placeholder.com/60x60" alt="Wireless Headphones">
+                                </div>
+                                <div class="order-item-details">
+                                    <h4 class="order-item-title">Wireless Headphones</h4>
+                                    <p>Quantity: 1</p>
+                                </div>
+                                <div class="order-item-price">$99.99</div>
+                            </div>
+                            <div class="order-item">
+                                <div class="order-item-image">
+                                    <img src="https://via.placeholder.com/60x60" alt="Smart Watch">
+                                </div>
+                                <div class="order-item-details">
+                                    <h4 class="order-item-title">Smart Watch</h4>
+                                    <p>Quantity: 1</p>
+                                </div>
+                                <div class="order-item-price">$149.99</div>
+                            </div>
+                        </div>
+                        <div class="order-footer">
+                            <div class="order-total">
+                                <p>Total: <strong>$249.98</strong></p>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn btn-small">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <h3>Order #12346</h3>
+                                <p>Placed on: May 28, 2025</p>
+                            </div>
+                            <span class="order-status status-shipped">Shipped</span>
+                        </div>
+                        <div class="order-items">
+                            <div class="order-item">
+                                <div class="order-item-image">
+                                    <img src="https://via.placeholder.com/60x60" alt="Coffee Maker">
+                                </div>
+                                <div class="order-item-details">
+                                    <h4 class="order-item-title">Coffee Maker</h4>
+                                    <p>Quantity: 1</p>
+                                </div>
+                                <div class="order-item-price">$79.99</div>
+                            </div>
+                        </div>
+                        <div class="order-footer">
+                            <div class="order-total">
+                                <p>Total: <strong>$79.99</strong></p>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn btn-small">View Details</button>
+                                <button class="btn btn-small">Track Package</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <h3>Order #12347</h3>
+                                <p>Placed on: May 10, 2025</p>
+                            </div>
+                            <span class="order-status status-processing">Processing</span>
+                        </div>
+                        <div class="order-items">
+                            <div class="order-item">
+                                <div class="order-item-image">
+                                    <img src="https://via.placeholder.com/60x60" alt="Face Serum">
+                                </div>
+                                <div class="order-item-details">
+                                    <h4 class="order-item-title">Face Serum</h4>
+                                    <p>Quantity: 2</p>
+                                </div>
+                                <div class="order-item-price">$59.98</div>
+                            </div>
+                            <div class="order-item">
+                                <div class="order-item-image">
+                                    <img src="https://via.placeholder.com/60x60" alt="Lipstick Set">
+                                </div>
+                                <div class="order-item-details">
+                                    <h4 class="order-item-title">Lipstick Set</h4>
+                                    <p>Quantity: 1</p>
+                                </div>
+                                <div class="order-item-price">$24.99</div>
+                            </div>
+                        </div>
+                        <div class="order-footer">
+                            <div class="order-total">
+                                <p>Total: <strong>$84.97</strong></p>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn btn-small">View Details</button>
+                                <button class="btn btn-small">Cancel Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Addresses Tab -->
+            <div class="tab-content" id="addresses">
+                <div class="profile-section">
+                    <h2>Saved Addresses</h2>
+                    
+                    <div class="address-card">
+                        <h3>Home</h3>
+                        <p>John Doe</p>
+                        <p>123 Main Street, Apt 4B</p>
+                        <p>New York, NY 10001</p>
+                        <p>United States</p>
+                        <p>Phone: +1 (123) 456-7890</p>
+                        <div class="address-actions">
+                            <button><i class="fas fa-edit"></i></button>
+                            <button><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="address-card">
+                        <h3>Work</h3>
+                        <p>John Doe</p>
+                        <p>456 Business Avenue, Suite 200</p>
+                        <p>New York, NY 10002</p>
+                        <p>United States</p>
+                        <p>Phone: +1 (123) 456-7890</p>
+                        <div class="address-actions">
+                            <button><i class="fas fa-edit"></i></button>
+                            <button><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                    
+                    <button class="btn">Add New Address</button>
+                </div>
+            </div>
+
+            <!-- Wishlist Tab -->
+            <div class="tab-content" id="wishlist">
+                <div class="profile-section">
+                    <h2>My Wishlist</h2>
+                    
+                    <div class="wishlist-item">
+                        <div class="wishlist-item-image">
+                            <img src="https://via.placeholder.com/100x100" alt="4K Smart TV">
+                        </div>
+                        <div class="wishlist-item-details">
+                            <h3 class="wishlist-item-title">4K Smart TV</h3>
+                            <p class="wishlist-item-price">$699.99</p>
+                            <p>Ultra HD Smart TV with built-in streaming apps.</p>
+                            <div class="wishlist-item-actions">
+                                <button class="btn btn-small">Add to Cart</button>
+                                <button class="btn btn-small">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wishlist-item">
+                        <div class="wishlist-item-image">
+                            <img src="https://via.placeholder.com/100x100" alt="Stand Mixer">
+                        </div>
+                        <div class="wishlist-item-details">
+                            <h3 class="wishlist-item-title">Stand Mixer</h3>
+                            <p class="wishlist-item-price">$199.99</p>
+                            <p>Powerful stand mixer for all your baking needs.</p>
+                            <div class="wishlist-item-actions">
+                                <button class="btn btn-small">Add to Cart</button>
+                                <button class="btn btn-small">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wishlist-item">
+                        <div class="wishlist-item-image">
+                            <img src="https://via.placeholder.com/100x100" alt="Perfume">
+                        </div>
+                        <div class="wishlist-item-details">
+                            <h3 class="wishlist-item-title">Perfume</h3>
+                            <p class="wishlist-item-price">$69.99</p>
+                            <p>Luxurious perfume with long-lasting fragrance.</p>
+                            <div class="wishlist-item-actions">
+                                <button class="btn btn-small">Add to Cart</button>
+                                <button class="btn btn-small">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ShopEase</h3>
+                    <p>Your one-stop destination for all your shopping needs.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#products">Products</a></li>
+                        <li><a href="index.html#categories">Categories</a></li>
+                        <li><a href="index.html#deals">Deals</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="index.html#contact">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Payment Methods</h3>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ShopEase. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <p>Total: <span id="cart-total-price">$0.00</span></p>
+            </div>
+            <button class="btn checkout-btn">Checkout</button>
+        </div>
+    </div>
+    <div class="overlay"></div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Profile tabs functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.profile-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Hide all tab contents
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Show the corresponding tab content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
